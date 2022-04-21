@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Hotel</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<div class="container-fluid">
+    <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link active" href="">Nouvelle-Chambre</a></li>
+        <li class="nav-item"><a class="nav-link active" href="">Gestion-Client</a></li>
+        <li class="nav-item"><a class="nav-link active" href="">Reservation</a></li>
+    </ul>
+</div>
+</nav>
+<div class="container mt-2">
+    <div class="card">
+        <div class="card-header">LES CHAMBRES</div>
+        <div class="card-body">
+            <form method="get" th:action="@{admin}">
+                <label>Numéro</label>
+                <input type="text" name="motcle" th:value="${motcle}">
+                <button class="btn btn-primary">Chercher</button>
+            </form>
+            <table class="table table-bordered table-striped">
+                <thead>
+                     <tr>
+                        <th>Numero</th><th>Catégorie</th><th>Prix</th><th>Disponibilité</th><th>Gérant</th>
+                     </tr>
+                </thead>
+                <tbody>
+                     <tr th:each="c:${listeChambres}">
+                        <td th:text="${c.numero}"></td>
+                         <td th:text="${c.categorie}"></td>
+                         <td th:text="${c.prix}"></td>
+                         <td th:text="${c.disponibilite}"></td>
+                         <td th:text="${c.gerant.nom}"></td>
+                     </tr>
+                </tbody>
+            </table>
+            <ul class="nav nav-pills">
+                <li th:each="page,status:${pages}">
+                    <a th:class="${status.index==currentPage?'btn btn-info ms-1':'btn btn-outline-info ms-1'}"
+                       th:text="${status.index}"
+                       th:href="@{admin(page=${status.index})}"></a>
+
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
